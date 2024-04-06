@@ -1,45 +1,37 @@
-const customName = document.getElementById('customname');
-const randomize = document.querySelector('.randomize');
-const story = document.querySelector('.story');
-
-function randomValueFromArray(array){
-  const random = Math.floor(Math.random()*array.length);
-  return array[random];
+const displayedImage = document.querySelector('.displayed-img');
+const thumbBar = document.querySelector('.thumb-bar');
+const btn = document.querySelector('button');
+const overlay = document.querySelector('.overlay');
+//array image filenames 
+const image1 = ['pic1.jpg'];
+const image2 =['pic2.jpg'];
+const image3 = ['pic3.jpg'];
+const image4 = ['pic4.jpg'];
+const image5 =['pic5.jpg'];
+//object  text for each image
+const altTexts = {'pic1.jpg': 'baby eye','pic2.jpg': 'rocks','pic3.jpg': 'purple flowers','pic4.jpg': 'ancient picture','pic5.jpg': 'Butterfly'};
+// thumb-bar Function
+function ThumbBar(imageFilenames) {
+  imageFilenames.forEach(filename => {const newImage = document.createElement('img');newImage.setAttribute('src', `images/${filename}`);
+    newImage.setAttribute('alt', altTexts[filename]);thumbBar.appendChild(newImage);
+    //click  thumb-bar
+    newImage.addEventListener('click', function() {
+      displayedImage.src = this.src;
+      displayedImage.alt = this.alt;
+    });
+  });
 }
-
-const storytext = "It was 94 fahrenheit outside, so :insertx: went for a walk. When they got to :inserty:, they stared in horror for a few moments, then :insertz:. Bob saw the whole thing, but was not surprised — :insertx: weighs 300 pounds, and it was a hot day.";
-
-const insertx = ["Willy the Goblin Big Daddy Father Christmas"];
-const insertz = ["spontaneously combusted melted into a puddle on the sidewalk turned into a slug and crawled away"];
-const inserty = ["the soup kitchen Disneyland the White House"];
-
-randomize.addEventListener('click', result);
-
-function result() {
-    let newstory = storytext;
-
-const xitem = randomValueFromArray(insertx); const yitem = randomValueFromArray(inserty); const zitem = randomValueFromArray(insertz);
-newstory = newstory.replaceAll("insertx", xitem) .replace("insertz", zitem) .replace("inserty", yitem)
-
-return `New story: ${newstory}`;
-
-}
-
-  if(customName.value !== '') {
-    const name = customName;
-    newstory = newstory.replace ('Bob' , name);
-
-  }
-
-  if(document.getElementById("uk").checked) {
-    const weight = `${Math.round(300 / 14)}
-    stone`;
-    const temperature = `${Math.round((94 - 32) * (5/9))} centigrade`; newstory = newstory.replace("300, weight") .replace("94, tempurature");
-
-  }
-
-  story.textContent = newstory;
-  story.style.visibility = 'visible';
-
-
-
+// images set for thumb-bar
+ThumbBar(image1);
+ThumbBar(image2);
+ThumbBar(image3);
+ThumbBar(image4);
+ThumbBar(image5);
+//dark and light button function 
+btn.addEventListener('click', function() {
+  const overlay = document.querySelector('.overlay');
+  const darkmode = btn.getAttribute('class') === 'dark';
+    btn.setAttribute('class', darkmode , 'light','dark');
+    btn.textContent = darkmode , 'Lighten' , 'Darken';
+    overlay.style.backgroundColor = darkmode ? 'rgb(0 0 0 / 50%)' : 'rgb(0 0 0 / 0%)';
+  });
